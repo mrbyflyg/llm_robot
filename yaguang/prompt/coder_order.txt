@@ -1,0 +1,97 @@
+We have a plan of a robot arm with palm to manipulate objects, and we want you to turn that into
+the corresponding program with following functions:
+
+Rules:
+1. Always format the code in code blocks. In your response execute_plan should be called exactly once at the end, and since it is an async function, it should be awaited.
+2. Do not invent new functions or classes. The only allowed functions you can call are the ones listed below. Do not leave unimplemented code blocks in your response.
+3. The only allowed library is numpy. Do not import or use any other library.
+4. If you are not sure what value to use, just use your best judge. Do not use None for anything.
+5. Do not calculate the position or direction of any object (except for the ones provided above). Just use a number directly based on your best guess.
+6. You do not need to make the robot do extra things not mentioned in the plan such as stopping the robot.
+7. If showing warning, don't generate any code.
+
+
+```
+def set_start2target(name_obj_A, name_obj_B)
+```
+where name_obj_A and name_obj_B are selected from ['palm', 'apple', 'banana', 'box', 'bowl', 'target'].
+This term sets a plan to go from name_obj_A to name_obj_B.
+rest_position is the default position for the palm when it's holding in the air.
+target_position is the default position for the object to be pushed or shifted on the x-y 2D plane
+
+```
+def set_start2position(name_obj_A, delta_x, delta_y, delta_z)
+```
+where name_obj_A is selected from ['palm', 'apple', 'banana', 'box', 'bowl', 'target'].
+and delta_x, delta_y, delta_z are expected displacements of name_obj_A in x, y, z axis.
+This term sets a plan to go from name_obj_A to new position.
+rest_position is the default position for the palm when it's holding in the air.
+
+```
+async def execute_plan() 
+```
+This function sends the parameters to the robot and execute the plan. No return.
+
+
+Example plan:
+To perform this task, the manipulator's palm should move close to object1=apple.
+object1 should be close to object2=bowl.
+object2 needs to be rotated by 30 degrees along 'x' axis.
+object2 needs to be lifted to a height of 1.0.
+This is the first plan for a new task.
+Example answer code:
+"""
+import numpy as np
+
+set_start2target("palm", "apple")
+set_start2target("apple", "bowl")
+set_start2position("bowl", 0.0, 0.0, 1.0)
+
+await execute_plan()
+"""
+
+Example plan:
+To perform this task, the manipulator's palm should move close to apple.
+object1=apple should be close to object2=box.
+Then, the manipulator's palm should move close to banana.
+object1=banana should be close to object2=target.
+This is the first plan for a new task.
+Example answer code:
+"""
+import numpy as np
+
+set_start2target("palm", "apple")
+set_start2target("apple", "box")
+set_start2target("palm", "banana")
+set_start2target("banana", "target")
+
+await execute_plan()
+"""
+
+Example plan:
+To perform this task, the manipulator's palm should move close to apple.
+object1=apple needs to be moved to a distance of 0.5m along 'x' axis at the end.
+object1=apple needs to be moved to a distance of 0.5m along 'y' axis at the end.
+This is the first plan for a new task.
+Example answer code:
+"""
+import numpy as np
+
+set_start2target("palm", "apple")
+set_start2position("apple", 0.5, 0.0, 0.0)
+set_start2position("apple", 0.0, 0.5, 0.0)
+
+await execute_plan()
+"""
+
+
+Example plan:
+warning:the task instruction is self-conflicting, pause for the next commands.
+This is not the first plan for a new task.
+Example answer code:
+"""
+import numpy as np
+rewards = 0
+"""
+
+If you understand, say Yes.

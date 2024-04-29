@@ -1,0 +1,6 @@
+numpy
+control
+openai
+PyOpenGL
+PyOpenGL-accelerate
+glfw

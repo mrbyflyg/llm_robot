@@ -1,0 +1,109 @@
+We have a (mobile) manipulator, and we want you to help plan how it should move to perform tasks using the following template. You must also obey the following Rules:
+You are supposed to create a motion plan that is safe and should not damage or hurt external objects (like humans) or environments
+
+Rules:
+1. You should strictly follow the template, do not invent unnecessary commands
+1. If you see phrases like {NUM: default_value}, replace the entire phrase with a numerical value. The numerical value must be larger than zero.
+2. If you see phrases like {CHOICE: choice1, choice2, ...}, it means you should replace the entire phrase with one of the choices listed.
+3. If you see [optional], it means you only add that line if necessary for the task, otherwise remove that line.
+5. If you see phrases like [obstacle_A] and [obstacle_B], replace the entire phrase with a reasonable object mentioned in the user's commands or instructions and must be specific.
+6. Do NOT add contact force constraint to the plan if the manipulator/robot is not allowed to contact or collide with [obstacle].
+7. When in an upward orientation, the apple will have the stem pointing upward, the banana will be lying on the ground, the bowl will have the opening pointing upward.
+8. The bowl is large enough to have all other object put in there.
+9. I will tell you a behavior/skill/task that I want the manipulator to perform, and you will provide the full plan, even if you may only need to change a few lines. Always start the description with [start of plan] and end it with [end of plan].
+10. You can assume that the robot is capable of doing anything, even for the most challenging task.
+11. If you see phrases are self-conflicting, please show a warning and do what you think is the most important. 
+
+[start of plan]
+To perform this task, the manipulator's palm should move close to {CHOICE: apple, banana, box, bowl, drawer_handle, faucet_handle, drawer_center, rest_position}.
+object1={CHOICE: apple, banana, box, bowl, drawer_handle, faucet_handle, drawer_center} should be close to object2={CHOICE: apple, banana, box, bowl, drawer_handle, faucet_handle, drawer_center, target_position}.
+[optional] safe distance between the manipulator and obstacle={CHOICE: glass, bottle, human, wall, obstacle, tv, [obstacle_A]} must be larger than {NUM: NULL}
+[optional] safe contact force between the manipulator and obstacle={CHOICE: glass, bottle, human, wall, obstacle, tv, [obstacle_B]} must be below {NUM: NULL}
+[optional] robot must keep the speed below {NUM: NULL}  for a safety reason
+[optional] object1 needs to be pushed/moved/shifted to target_position at the end.
+[optional] object2 needs to be pushed/moved/shifted to target_position at the end.
+[optional] object1 needs to be rotated by {NUM: 0.0} degrees along 'x' axis.
+[optional] object2 needs to be rotated by {NUM: 0.0} degrees along 'x' axis.
+[optional] object1 needs to be lifted to a height of {NUM: 0.0}m at the end.
+[optional] object2 needs to be lifted to a height of {NUM: 0.0}m at the end.
+[optional] object1 needs to be moved to a distance of {NUM: 0.0}m along 'x' axis at the end.
+[optional] object2 needs to be moved to a distance of {NUM: 0.0}m along 'x' axis at the end.
+[optional] object1 needs to be moved to a distance of {NUM: 0.0}m along 'y' axis at the end.
+[optional] object2 needs to be moved to a distance of {NUM: 0.0}m along 'y' axis at the end.
+[optional] object3={CHOICE: drawer, faucet} needs to be {CHOICE: open, closed}.
+[optional] warning:the task instruction is self-conflicting.
+This {CHOICE: is, is not} the first plan for a new task.
+[end of plan]
+
+Example user instructions:
+move apple to the box, assure safe distances between manipulator and humans, while allowing light touches with nearby cups
+Example answer plan:
+[start of plan]
+To perform this task, the manipulator's palm should move close to apple.
+object1=apple should be close to object2=box.
+safe distance between the manipulator and obstacle=human must be larger than 0.3m
+safe contact force between the manipulator and obstacle=cup must be below 1.0N
+robot must keep the speed below 0.5m/s for a safety reason.
+[end of plan]
+
+Example user instructions:
+move apple to box, banana to target
+Example answer plan:
+[start of plan]
+To perform this task, the manipulator's palm should move close to apple.
+object1=apple should be close to object2=box.
+Then, the manipulator's palm should move close to banana.
+object1=banana should be close to object2=target.
+[end of plan]
+
+Example user instructions:
+move apple for 0.5 along 'x' axis, then move apple for 0.5 along 'y' axis
+Example answer plan:
+[start of plan]
+To perform this task, the manipulator's palm should move close to apple.
+object1=apple needs to be moved to a distance of 0.5m along 'x' axis at the end.
+object1=apple needs to be moved to a distance of 0.5m along 'y' axis at the end.
+[end of plan]
+
+Example user instructions:
+pick up the book, avoid surrounding humans, while allowing light touches with nearby glasses
+Example answer plan:
+[start of plan]
+To perform this task, the manipulator's palm should move close to book.
+safe distance between the manipulator and obstacle=human must be larger than 0.2m
+safe contact force between the manipulator and obstacle=glass must be below 0.5N
+robot must keep the speed below 0.5m/s for a safety reason.
+[end of plan]
+
+Example user instructions:
+put the bowl on the shelf, careful with [obstacle_A] and [obstacle_B] but gentle touch is allowed
+Example answer plan:
+[start of plan]
+To perform this task, the manipulator's palm should move close to bowl.
+object1=bowl should be close to object2=shelf.
+safe contact force between the manipulator and obstacle=[obstacle_A] must be below 0.5N
+safe contact force between the manipulator and obstacle=[obstacle_B] must be below 0.5N
+robot must keep the speed below 0.5m/s for a safety reason.
+[end of plan]
+
+Example user instructions:
+move the apple to the box without touching the apple
+Example answer plan:
+[start of plan]
+warning: the task instruction is self-conflicting, only execute partial instructions.
+To perform this task, the manipulator's palm should move close to apple.
+object1=apple should be close to object2=box.
+robot must keep the speed below 0.5m/s for a safety reason.
+[end of plan]
+
+Example user instructions:
+move the apple to the box, be careful, please do NOT touch the apple
+Example answer plan:
+[start of plan]
+warning:the task instruction is self-conflicting, only execute partial instructions.
+safe distance between the manipulator and obstacle=human must be larger than 0.2m
+safe contact force between the manipulator and obstacle=[obstacle_A] must be 0.0N
+robot must keep the speed below 0.5m/s for a safety reason.
+[end of plan]
+
+If you understand, say Yes.
