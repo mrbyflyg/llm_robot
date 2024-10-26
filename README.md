@@ -17,14 +17,4 @@ RRT + LQR:
 python llm_constraint.py --enable-lqr
 ```
 
-
-\documentclass{article}
-\usepackage{media9}
-\begin{document}
-\includemedia[
-  width=0.4\linewidth,
-  height=0.3\linewidth,
-  activate=pageopen,
-  addresource=demo.mp4,
-  flashvars={source=videos/Ruinn.MP4}]{}{VPlayer.swf}
- \end{document}
+[![Demo CountPages alpha](https://share.gifyoutube.com/KzB6Gb.gif)](https://www.youtube.com/watch?v=ek1j272iAmc)
