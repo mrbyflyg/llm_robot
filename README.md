@@ -17,4 +17,8 @@ RRT + LQR:
 python llm_constraint.py --enable-lqr
 ```
 
-[![Demo CountPages alpha](https://share.gifyoutube.com/KzB6Gb.gif)](https://www.youtube.com/watch?v=ek1j272iAmc)
+
+
+https://github.com/user-attachments/assets/6044b526-478d-49c8-a2fe-0ab0e6183f8d
+
+
